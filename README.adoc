@@ -1,0 +1,36 @@
+= Versioned Fields
+
+== TODO list for version `0.1.0`:
+
+- Create declarative syntax (DSL?) for describing migrations
+- Support for `ActiveRecord` for starters
+- For column `foo` check if `foo_version` is present in the corresponding table
+
+Future TODO:
+
+1. Support for Sequel
+2. Support for DataMapper
+
+== Usage
+
+Having table `users` with field `address`, and `address_version`.
+
+On version 1 we have addresses like `Green Avenue, #1516`
+On version 2 we want to append city to it: `Los Angeles, Green Avenue, #1516`
+On version 3 we want to replace city with state: `LA, Green Avenue #1516`
+
+[source,ruby]
+---
+# db/versioned_fields/foo.rb
+
+VersionedFields::Migration.draw_for(User, :foo) do
+  version 1 # automatically set smallest version as initial one
+  version 2 do |value|
+    "Los Angeles #{value}"
+  end
+
+  version 3 do |value|
+    value.gsub('Los Angeles', 'LA')
+  end
+end
+---
