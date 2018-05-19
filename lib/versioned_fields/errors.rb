@@ -10,7 +10,7 @@ module VersionedFields
     end
 
     def message
-      <<~MESSAGE.strip.gsub("\n", ' ')
+      <<~MESSAGE.strip.tr("\n", ' ')
         #{@field_migration.model_class}##{@field_migration.field_name}
         already has migration with version #{@version} defined.
       MESSAGE

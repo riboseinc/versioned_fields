@@ -7,7 +7,7 @@ module VersionedFields
         # private
 
         def patch_models!
-          Migrations.migrations.each do |model_class, migrations|
+          Migrations.migrations.each do |model_class, _|
             model_class.class_eval do
               include VersionedFields::Adapters::ActiveRecord::MigrateFields
               include VersionedFields::Adapters::ActiveRecord::\

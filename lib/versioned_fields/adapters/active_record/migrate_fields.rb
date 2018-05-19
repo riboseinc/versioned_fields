@@ -11,8 +11,8 @@ module VersionedFields
 
             # Call migration & update field's version
             current_value = public_send(field)
-            new_value     = self.instance_exec(current_value, &migration)
-            public_send("#{field}=", migration.call(current_value))
+            new_value     = instance_exec(current_value, &migration)
+            public_send("#{field}=",         new_value)
             public_send("#{field}_version=", next_version)
           end
 

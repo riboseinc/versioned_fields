@@ -12,7 +12,7 @@ module VersionedFields
       end
 
       def version(version_id, &block)
-        if @migrations.keys.include?(version_id)
+        if @migrations.key?(version_id)
           raise VersionedFields::DuplicatedMigration.new(version_id, self)
         end
 
