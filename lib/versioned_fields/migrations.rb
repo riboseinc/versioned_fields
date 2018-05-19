@@ -12,6 +12,10 @@ module VersionedFields
           Migrations::Field.new(model_class, field_name)
         @migrations[model_class][field_name].instance_eval(&block)
       end
+
+      def migration_for(model_class, field_name, version)
+        migrations[model_class][field_name].migrations[version]
+      end
     end
   end
 end

@@ -18,6 +18,14 @@ module VersionedFields
 
         @migrations[version_id] = block
       end
+
+      def latest_version
+        @migrations.keys.max
+      end
+
+      def versions_above(given_version)
+        @migrations.keys.sort.select { |ver| ver > given_version }
+      end
     end
   end
 end

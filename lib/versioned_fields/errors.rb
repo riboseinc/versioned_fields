@@ -16,4 +16,17 @@ module VersionedFields
       MESSAGE
     end
   end
+
+  class MissingFieldVersion < Error
+    def initialize(field, model)
+      @field = field
+      @model = model
+    end
+
+    def message
+      "Missing version for the field <#{@model}.#{@field}>. "\
+        "Please make sure <#{@field}_version> is filled "\
+        "for the whole #{@model} table."
+    end
+  end
 end
