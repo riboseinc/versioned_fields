@@ -23,7 +23,7 @@ end
 
 === Using VersionedFields migrations
 
-Assuming you have `users` table with field `address`, and `address_version`.
+Assuming you have `users` table with field `address` and `address_version`.
 
 On version 1 (initial version) we have addresses like `Green Avenue, #1516`.
 
@@ -39,7 +39,7 @@ VersionedFields::Migration.draw_for(User, :address) do
   version 1 # No block, since it's a first version
   version 2 do |prev_value|
     # Write here code needed to migrate from v1 to v2
-    # You can you model methods here
+    # You can use model methods here
     "Los Angeles #{prev_value}"
   end
 end
@@ -80,3 +80,7 @@ namespace :users do
   end
 end
 ```
+
+== Links
+
+* link:CHANGELOG.adoc[CHANGELOG]
