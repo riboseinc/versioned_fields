@@ -6,8 +6,8 @@ module VersionedFields
       attr_reader :model_class, :field_name, :migrations
 
       def initialize(model_class, field_name)
-        @model_class = model_class
         @field_name  = field_name
+        @model_class = model_class
         @migrations  = {}
       end
 
@@ -24,7 +24,7 @@ module VersionedFields
       end
 
       def versions_above(given_version)
-        @migrations.keys.sort.select { |ver| ver > given_version }
+        @migrations.keys.select { |ver| ver > given_version }.sort
       end
     end
   end

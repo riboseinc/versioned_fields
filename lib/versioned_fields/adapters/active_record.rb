@@ -4,8 +4,6 @@ module VersionedFields
   module Adapters
     module ActiveRecord
       class << self
-        # private
-
         def patch_models!
           Migrations.migrations.each do |model_class, _|
             model_class.class_eval do

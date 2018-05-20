@@ -26,7 +26,7 @@ module VersionedFields
     def message
       "Missing version for the field <#{@model}.#{@field}>. "\
         "Please make sure <#{@field}_version> is filled "\
-        "for the whole #{@model} table."
+        "for the whole #{@model.class} table."
     end
   end
 end

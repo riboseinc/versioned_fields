@@ -80,8 +80,3 @@ namespace :users do
   end
 end
 ```
-
-== Future TODO:
-
-- Write tests
-- Support for Sequel
