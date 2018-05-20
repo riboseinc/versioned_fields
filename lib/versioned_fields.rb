@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 require 'versioned_fields/version'
 require 'versioned_fields/errors'
 require 'versioned_fields/migrations'
