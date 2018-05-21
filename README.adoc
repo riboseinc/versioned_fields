@@ -49,6 +49,11 @@ Now, restart your server.
 When you access a certain user (i.e. - `User.find(22)`), it's `address` value
 will be automatically upgraded to version 2, with the city name.
 
+_**__Note__** that writing to the DataBase will be performed before you'll receive your model object.
+So in the end you'll receive user with a correct address, migrated to the latest version._
+
+_At the same time, until you did not access that particular user, its address will be in the state of outdated version. So searching through the database will be still considering outdated version!_
+
 Now let's assume you decided to replace city with state. Open migration file for `address` field,
 and add a new migration:
 
