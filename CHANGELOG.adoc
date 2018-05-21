@@ -1,0 +1,7 @@
+= CHANGELOG
+
+==== 0.1.0 (2018-05-20)
+
+* First version of the gem! 🎉 (https://github.com/nattfodd[@nattfodd])
+* Implemented DSL for writing migrations for your versioned fields (https://github.com/nattfodd[@nattfodd])
+* Implemented support for zero-downtime migrations for ActiveRecord & Rails (https://github.com/nattfodd[@nattfodd])
