@@ -3,9 +3,11 @@
 module VersionedFields
   class Migrations
     class Field
+      attr_accessor :config
       attr_reader :model_class, :field_name, :migrations
 
       def initialize(model_class, field_name)
+        @config      = Config.new
         @field_name  = field_name
         @model_class = model_class
         @migrations  = {}

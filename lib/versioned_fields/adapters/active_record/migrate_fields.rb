@@ -4,14 +4,16 @@ module VersionedFields
   module Adapters
     module ActiveRecord
       module MigrateFields
+        # Those methods are included into model class
         def migrate_fields!
           for_each_migration do |field, next_version|
             migration =
               Migrations.migration_for(self.class, field, next_version)
 
             # Call migration & update field's version
-            current_value = public_send(field)
-            new_value     = instance_exec(current_value, &migration)
+            migration_params =
+              Migrations::Params.new(field: field, version: next_version)
+            new_value = instance_exec(migration_params, &migration)
             public_send("#{field}=",         new_value)
             public_send("#{field}_version=", next_version)
           end

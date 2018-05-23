@@ -1,12 +1,21 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Integration specs' do
+  module FooBarModule; end
+
   before(:all) do
     VersionedFields::Migrations.instance_variable_set(:@migrations, {})
     VersionedFields::Migrations.draw_for(FooModel, :foobar) do
+      config.include FooBarModule
+
       version 1
-      version(2) { |value| "Version 2: #{value}" }
-      version(3) { |value| value.gsub('Version 2: ', 'Version 3 - ') }
+      version(2) { "Version 2: #{foobar}" }
+      version(3) do |migration|
+        foobar.gsub(
+          'Version 2: ',
+          "#{migration.field} Version #{migration.version} - "
+        )
+      end
     end
     VersionedFields::Adapters::ActiveRecord.patch_models!
   end
@@ -18,7 +27,11 @@ RSpec.describe 'Integration specs' do
       expect { record.reload }
         .to change { [record.foobar, record.foobar_version] }
         .from(['Some value', 1])
-        .to(['Version 3 - Some value', 3])
+        .to(['foobar Version 3 - Some value', 3])
+    end
+
+    it 'includes helper module to migrated model class' do
+      expect(FooModel.included_modules).to include(FooBarModule)
     end
   end
 
