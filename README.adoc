@@ -37,10 +37,10 @@ and put there the following code:
 
 VersionedFields::Migration.draw_for(User, :address) do
   version 1 # No block, since it's a first version
-  version 2 do |prev_value|
+  version 2 do
     # Write here code needed to migrate from v1 to v2
     # You can use model methods here
-    "Los Angeles #{prev_value}"
+    "Los Angeles #{address}"
   end
 end
 ```
@@ -62,12 +62,12 @@ and add a new migration:
 
 VersionedFields::Migration.draw_for(User, :address) do
   version 1
-  version 2 do |prev_value|
+  version(2)do
     "Los Angeles #{prev_value}"
   end
 
-+ version 3 do |value|
-+   value.gsub('Los Angeles', 'LA')
++ version(3)do
++   address.gsub('Los Angeles', 'LA')
 + end
 end
 ```
@@ -85,6 +85,45 @@ namespace :users do
   end
 end
 ```
+
+== Separating concerns
+
+In case your data migrations are huge, you may want to move them into separate module.
+
+Lets say, you've decided to replace address with array of coordinates.
+
+```ruby
+# lib/address_to_coordinates.rb
+
+module AddressToCoordinates
+  def address_to_coordinates
+    GeocodingService.lookup(address).to_yaml
+  end
+end
+```
+
+Then, you can obviously include that module directly into `User` model definition,
+but since this module is only needed for migration purposes,
+it's a better idea to have it right there:
+
+```ruby
+# db/migrate_versioned_fields/user/address.rb
+
+VersionedFields::Migration.draw_for(User, :address) do
+  config.include AddressToCoordinates
+
+  version 1
+  version(2)do
+    "Los Angeles #{prev_value}"
+  end
+
+  version(3) do
+    address_to_coordinates
+  end
+end
+```
+
+This might be also useful if you want to write an extension for `versioned_fields`.
 
 == Links
 

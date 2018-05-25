@@ -4,6 +4,8 @@ require 'versioned_fields/version'
 require 'versioned_fields/errors'
 require 'versioned_fields/migrations'
 require 'versioned_fields/migrations/field'
+require 'versioned_fields/migrations/config'
+require 'versioned_fields/migrations/params'
 
 if defined?(::ActiveRecord)
   require 'versioned_fields/adapters/active_record/specify_latest_versions'

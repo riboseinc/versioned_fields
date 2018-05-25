@@ -1,5 +1,10 @@
 = CHANGELOG
 
+==== 0.2.0 (2018-05-23)
+
+* 💥BREAKING CHANGES💥 `version` method now passes special `migration` object instead of current value (current value can be accessed simply by calling the field's name) (https://github.com/nattfodd[@nattfodd])
+* Added ability to include migration helper modules (https://github.com/nattfodd[@nattfodd])
+
 ==== 0.1.0 (2018-05-20)
 
 * First version of the gem! 🎉 (https://github.com/nattfodd[@nattfodd])

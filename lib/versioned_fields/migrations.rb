@@ -11,7 +11,7 @@ module VersionedFields
         @migrations[model_class] ||= {}
         @migrations[model_class][field_name] ||=
           Migrations::Field.new(model_class, field_name)
-        @migrations[model_class][field_name].instance_eval(&block)
+        @migrations[model_class][field_name].instance_exec(&block)
       end
 
       def migration_for(model_class, field_name, version)
